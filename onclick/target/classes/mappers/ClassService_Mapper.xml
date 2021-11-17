@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.ClassService_Mapper">
+
+<insert id="classInsert" parameterType="HashMap">
+INSERT INTO onclick_class(cidx,cname,ccontents,cdate,csta,cfin,creyn,cweek,cseq,lidx,cnotyn)
+VALUES(ONCLICK_CIDX_SEQ.nextval, #{cname},#{ccontents},sysdate,#{csta},#{cfin},#{creyn},#{cweek},1,#{lidx},#{cnotyn})
+</insert>
+
+<update  id="classUpdate" parameterType="Integer">
+UPDATE onclick_class
+SET cseq=cseq+1
+WHERE cweek=#{0}
+</update >
+	
+<select id="classSelect" parameterType="Integer" resultType="cv">
+SELECT *	
+FROM onclick_class
+WHERE lidx=#{lidx}
+ORDER BY cweek, cseq
+</select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.LecService_Mapper">
+
+<select id="lecSelectAll" parameterType="Integer" resultType="lv">
+SELECT * 
+FROM  onclick_prolec 
+WHERE pidx=#{pidx}
+</select>
+	
+<select id="lecHome" parameterType="Integer" resultType="lv">
+SELECT * 
+FROM onclick_prolec 
+WHERE ldelyn='N' 
+AND lidx=#{lidx}
+</select>
+
+<select id="lecSelectOne" parameterType="Integer" resultType="lv">
+SELECT *
+FROM onclick_prolec
+WHERE ldelyn='N'
+and lidx=#{lidx}
+</select>
+
+<select id="lecStudentList" parameterType="Integer" resultType="sv">
+SELECT * 
+FROM onclick_student a
+JOIN onclick_enroll b
+ON a.sidx = b.sidx
+WHERE lidx=#{lidx} 
+</select>
+</mapper>

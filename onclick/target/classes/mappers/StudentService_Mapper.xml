@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.StudentService_Mapper">
+
+<select id="studentIdChcek" parameterType="Integer" resultType="Integer">
+SELECT count(*) as cnt 
+FROM  onclick_student  
+WHERE sdelYn='N'
+AND sidx=#{sidx}
+</select>
+
+<update id="studentJoin" parameterType="HashMap">
+UPDATE onclick_student
+SET sname=#{sname},spwd=#{spwd},semail=#{semail},sphone=#{sphone}
+WHERE sidx=#{sidx}
+</update>
+
+<select id="studentLogin" parameterType="HashMap" resultType="sv">
+SELECT * 
+FROM onclick_student 
+WHERE sdelyn='N' 
+AND sidx=#{id} 
+AND spwd=#{pwd}
+</select>
+
+<select id="stuLecSelectAll" parameterType="Integer" resultType="ed">
+SELECT a.eidx, a.sidx, a.lidx, b.lname
+FROM onclick_enroll a
+INNER JOIN onclick_prolec b
+ON a.lidx = b.lidx
+WHERE a.sidx=#{id}
+</select>
+
+<select id="studentPwdCheck"  parameterType="HashMap" resultType="Integer">
+SELECT count(*) as cnt
+FROM onclick_student 
+WHERE sdelyn='N' 
+AND spwd=#{spwd}
+</select>
+	
+<select id="studentSelectOne"  parameterType="Integer" resultType="sv">
+SELECT *
+FROM onclick_student 
+WHERE sdelyn='N' 
+AND sidx=#{sidx}
+</select>	
+
+<select id="stuTaskSelectAll" parameterType="Integer" resultType="tv">
+<![CDATA[SELECT *
+FROM(
+	SELECT a.lidx, b.tuname, b.tuidx
+	FROM onclick_enroll a
+	INNER JOIN onclick_taskupload b
+	ON a.lidx = b.lidx
+	WHERE a.sidx=#{id}
+	AND b.tudelyn='N'
+     )
+WHERE ROWNUM <= 5 ]]>
+</select>
+
+<select id="stuTaskContent" parameterType="String" resultType="tv">
+<![CDATA[SELECT *
+FROM(
+     SELECT *
+     FROM onclick_taskupload
+     AND tuname=#{tuname}
+     WHERE tudelyn='N'
+     ORDER BY tudate DESC
+     )
+WHERE ROWNUM <= 5 ]]>
+</select>
+	
+</mapper>

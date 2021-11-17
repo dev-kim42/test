@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.S_taskService_Mapper">
+
+<insert id="s_taskFileInsert" parameterType="HashMap">
+	<selectKey resultType="Integer" keyProperty="fidx" order="AFTER">
+		SELECT fidx_seq.CURRVAL FROM DUAL
+	</selectKey>
+INSERT INTO onclick_file (FIDX,FSAVEDNAME,FORIGINNAME,FTYPE,FROUTE)
+VALUES (fidx_seq.nextval,#{savedName},#{originName},#{originalFileExtension},#{route})
+</insert>
+
+<update id="s_taskUpdate" parameterType="HashMap">
+UPDATE onclick_stutask 
+SET TSUBYN='Y', TSUBJECT=#{tsubject}, TDATE=sysdate, TCONTENTS=#{tcontents}, FIDX=#{fidx}
+WHERE tidx=#{tidx}
+</update>
+
+<select id="s_taskSelectOne" parameterType="Integer" resultType="std">
+SELECT *
+FROM onclick_stutask
+WHERE tdelyn = 'N'
+AND tidx=#{tidx}
+</select>
+
+<update id="s_taskModify" parameterType="HashMap">
+UPDATE onclick_stutask
+SET TSUBJECT=#{tsubject}, TDATE=sysdate, TCONTENTS=#{tcontents}, TFILE=#{tfile}
+WHERE tidx=#{tidx}
+</update>
+
+<select id="taskSubmitList" parameterType="Integer" resultType="std">
+SELECT *
+FROM onclick_stutask
+WHERE tdelyn='N'
+AND tuidx=#{tuidx}
+</select>
+
+<select id="s_taskTidx" parameterType="Integer" resultType="Integer">
+SELECT tidx
+FROM onclick_stutask
+WHERE tdelyn='N'
+AND sidx=#{0}
+AND tuidx=#{1}
+</select>
+
+<select id="stuTask" parameterType="Integer" resultType="std">
+SELECT *
+FROM onclick_stutask
+WHERE tdelyn='N'
+AND sidx=#{sidx}
+</select>
+
+<update id="s_taskDelete" parameterType="Integer">
+UPDATE onclick_stutask
+SET tdelyn='Y', tsubyn='N', tsubject='', tdate='', tcontents=''
+WHERE tidx=#{tidx}
+</update>
+
+</mapper> 

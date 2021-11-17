@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+     
+ <configuration> 
+ <typeAliases>
+ <typeAlias alias="sv" type="com.onclick.app.domain.StudentVO"/>
+ <typeAlias alias="pv" type="com.onclick.app.domain.ProfessorVO"/>
+ <typeAlias alias="ed" type="com.onclick.app.domain.EnrollDTO"/>
+ <typeAlias alias="lv" type="com.onclick.app.domain.LecVO"/>
+ <typeAlias alias="tv" type="com.onclick.app.domain.TaskVO"/>
+ <typeAlias alias="lnv" type="com.onclick.app.domain.LecNoticeVO"/>
+ <typeAlias alias="std" type="com.onclick.app.domain.S_taskDTO"/>
+ <typeAlias alias="fv" type="com.onclick.app.domain.FileVO"/>
+ <typeAlias alias="vd" type="com.onclick.app.domain.VideoAttenDto"/>
+ <typeAlias alias="cv" type="com.onclick.app.domain.ClassVo"/>
+ </typeAliases>  
+ </configuration>

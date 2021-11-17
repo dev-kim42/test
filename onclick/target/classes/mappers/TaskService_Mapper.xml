@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.TaskService_Mapper">
+
+<select id="taskSelectOne" parameterType="Integer" resultType="tv">
+SELECT *
+FROM onclick_taskupload
+WHERE tudelyn='N'
+AND tuidx=#{tuidx}
+</select>
+
+<select id="taskSelectAll" parameterType="Integer" resultType="tv">
+SELECT *
+FROM onclick_taskupload
+WHERE tudelyn='N'
+AND lidx=#{lidx}
+ORDER BY tudate DESC
+</select>
+
+<select id="taskAll" parameterType="Integer" resultType="tv">
+SELECT * 
+FROM onclick_taskupload
+WHERE tudelyn='N'
+AND lidx=#{lidx}
+</select>
+
+<insert id="taskFileInsert" parameterType="HashMap">
+	<selectKey resultType="Integer" keyProperty="fidx" order="AFTER">
+		SELECT fidx_seq.CURRVAL FROM DUAL
+	</selectKey>
+INSERT INTO onclick_file (FIDX,FSAVEDNAME,FORIGINNAME,FTYPE,FROUTE)
+VALUES (fidx_seq.nextval,#{savedName},#{originName},#{originalFileExtension},#{route})
+</insert>
+
+<insert id="taskInsert" parameterType="HashMap">
+	<selectKey resultType="Integer" keyProperty="tuidx" order="AFTER">
+		SELECT tuidx_seq.CURRVAL FROM DUAL
+	</selectKey>
+INSERT INTO onclick_taskupload (TUIDX,TUNAME,TUSTART,TUFIN,TUDATE,TUNOTYN,LIDX,TUCONTENTS,FIDX)
+VALUES (tuidx_seq.nextval,#{tusubject},#{tustart},#{tufin},sysdate,#{tunotyn},#{lidx},#{tucontents},#{fidx})
+</insert>
+
+<insert id="stuTaskDefault" parameterType="Integer">
+INSERT INTO onclick_stutask(SIDX, TUIDX)
+VALUES ((SELECT SIDX
+		 FROM onclick_enroll
+		 WHERE lidx=#{0}) , #{1})
+</insert>
+
+<update id="taskDelete" parameterType="Integer">
+UPDATE onclick_taskupload
+SET tudelyn='Y'
+WHERE tuidx=#{tuidx}
+</update>
+
+<update id="taskModify" parameterType="HashMap">
+UPDATE onclick_taskupload
+SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUDATE=sysdate, TUNOTYN=#{tunotyn}, TUCONTENTS=#{tucontents}
+WHERE tuidx=#{tuidx}
+</update>
+
+<update id="taskFileModify" parameterType="HashMap">
+UPDATE onclick_taskupload
+SET TUNAME=#{tusubject}, TUSTART=#{tustart}, TUFIN=#{tufin}, TUDATE=sysdate, TUNOTYN=#{tunotyn}, TUCONTENTS=#{tucontents}, FIDX=#{fidx}
+WHERE tuidx=#{tuidx}
+</update>
+
+<update id="tExFileDelete" parameterType="Integer">
+UPDATE onclick_taskupload
+SET FIDX=null
+WHERE tuidx=#{tuidx}
+</update>
+
+</mapper> 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.LecNoticeService_Mapper">
+
+<select id="lecNoticeSelectAll" parameterType="Integer" resultType="lnv">
+SELECT * 
+FROM onclick_lecnotice
+WHERE lndelyn='N'
+AND lidx=#{lidx}
+ORDER BY lndate DESC
+</select>
+
+<select id="lecNoticeSelectDash" parameterType="Integer" resultType="lnv">
+<![CDATA[SELECT *
+FROM(
+	 SELECT * 
+	 FROM onclick_lecnotice
+	 WHERE lndelyn='N'
+	 AND lidx=#{lidx}
+	 ORDER BY lndate DESC
+     )
+WHERE ROWNUM <= 5 ]]>
+</select>
+
+<select id="lecNoticeContent" parameterType="Integer" resultType="lnv">
+SELECT *
+FROM onclick_lecnotice
+WHERE lndelyn='N'
+AND lnidx=#{lnidx}
+</select>
+	
+</mapper>

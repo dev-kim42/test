@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onclick.app.persistence.VideoAttenService_Mapper">
+
+<update id="videoUpdate" parameterType="HashMap">
+UPDATE onclick_videoattendence
+SET vfull=#{vfull},vstart=#{vstart},vend=#{vend},vpercent=vpercent+#{vpercent}
+WHERE sidx=#{sidx} 
+AND cidx=#{cidx}
+</update>
+
+
+<select id="videoSelectOne" parameterType="HashMap" resultType="vd">
+SELECT * 
+FROM onclick_videoattendence
+WHERE sidx=#{sidx} 
+AND cidx=#{cidx}
+</select>
+
+
+</mapper> 
